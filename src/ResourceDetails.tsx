@@ -70,8 +70,8 @@ function ResourceDetails() {
           {rows.map((entry: any, index: number) => (
             <tr>
               <td>{index + 1}</td>
-              <td>{entry.ConsumedQuantity}</td>
-              <td>$ {Number(entry.Cost).toFixed(2)}</td>
+              <td align="right">{entry.ConsumedQuantity}</td>
+              <td align="right">$ {Number(entry.Cost).toFixed(2)}</td>
               <td>{entry.Date}</td>
               <td>{entry.MeterCategory}</td>
               <td>{entry.ResourceGroup}</td>
