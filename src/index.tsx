@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'datatables.net-dt/css/jquery.dataTables.min.css'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
