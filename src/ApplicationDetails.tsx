@@ -54,7 +54,7 @@ function ApplicationDetails() {
             <th rowSpan={2}>Date</th>
             <th rowSpan={2}>Meter Category</th>
             <th rowSpan={2}>Resource Group</th>
-            <th rowSpan={2}>Resource Location</th>
+            <th rowSpan={2}>Location</th>
             <th rowSpan={2}>ServiceName</th>
             <th colSpan={3}>Tags</th>
           </tr>
@@ -78,7 +78,7 @@ function ApplicationDetails() {
               <td>{entry.Date}</td>
               <td>{entry.MeterCategory}</td>
               <td>{entry.ResourceGroup}</td>
-              <td>{entry.ResourceLocation}</td>
+              <td>{entry.Location}</td>
               <td>{entry.ServiceName}</td>
               <td>{entry.Tags["app-name"]}</td>
               <td>{entry.Tags.environment}</td>
