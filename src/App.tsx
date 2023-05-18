@@ -18,6 +18,7 @@ import ResourcesList from "./ResourcesList";
 import ResourceDetails from "./ResourceDetails";
 
 import "./App.css";
+import CloudApplications from "./CloudApplications";
 const drawerWidth = 240;
 
 export default function App() {
@@ -32,6 +33,7 @@ export default function App() {
   };
 
   const titleForHeader = [
+    { name: "Cloud Application List", path: "/cloud-applications" },
     { name: "Application List", path: "/application-list" },
     { name: "Application Details", path: "/application-details" },
     { name: "Resources List", path: "/resources-list" },
@@ -39,6 +41,7 @@ export default function App() {
   ];
 
   const menuList = [
+    { name: "Cloud Applications", path: "/cloud-applications" },
     { name: "Applications", path: "/application-list" },
     { name: "Resourses", path: "/resources-list" },
   ];
@@ -139,6 +142,7 @@ export default function App() {
           />
           <Route path="/resources-list" Component={ResourcesList} />
           <Route path="/resource-details/:name" Component={ResourceDetails} />
+          <Route path="/cloud-applications" Component={CloudApplications} />
         </Routes>
       </Box>
     </Box>

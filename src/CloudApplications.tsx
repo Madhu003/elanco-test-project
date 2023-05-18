@@ -4,22 +4,21 @@ import axios from "axios";
 import DataTable from "datatables.net-dt";
 import $ from "jquery";
 import { Backdrop, CircularProgress } from "@mui/material";
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { BASE_URL } from "./constants";
 
 let table;
 
-function ApplicationDetails() {
+function CloudApplications() {
   const [isLoading, setLoading] = useState(false);
   const [rows, setRows] = useState<any>([]);
-  let { appName } = useParams();
 
   useEffect(() => {
     table = new DataTable("#myTable");
     console.log(table);
     setLoading(true);
     axios
-      .get(`${BASE_URL}/applications/${appName}`)
+      .get(`${BASE_URL}/raw`)
       .then(function (response) {
         setRows(response.data);
         $(document).ready(function () {
@@ -55,15 +54,9 @@ function ApplicationDetails() {
             <th rowSpan={2}>Consumed Quantity</th>
             <th rowSpan={2}>Cost</th>
             <th rowSpan={2}>Date</th>
-            {/* <th rowSpan={2}>Meter Category</th> */}
             <th rowSpan={2}>Resource Group</th>
-            <th rowSpan={2}>Location</th>
             <th rowSpan={2}>ServiceName</th>
-            <th colSpan={2}>Tags</th>
-          </tr>
-          <tr>
-            <th>Environment</th>
-            <th>Business unit</th>
+            <th rowSpan={2}>Location</th>
           </tr>
         </thead>
         <tbody>
@@ -73,9 +66,12 @@ function ApplicationDetails() {
               <td>{entry.ConsumedQuantity}</td>
               <td>${" "}{Number(entry.Cost).toFixed(2)}</td>
               <td>{entry.Date}</td>
-              {/* <td>{entry.MeterCategory}</td> */}
-              <td>{entry.ResourceGroup}</td>
               <td>{entry.Location}</td>
+              <td>
+                <Link to={`/application-details/${entry.ResourceGroup}`}>
+                  {entry.ResourceGroup}
+                </Link>
+              </td>
               <td>
                 <Link to={`/resource-details/${entry.ServiceName}`}>
                   {entry.ServiceName}
@@ -91,4 +87,4 @@ function ApplicationDetails() {
   );
 }
 
-export default ApplicationDetails;
+export default CloudApplications;

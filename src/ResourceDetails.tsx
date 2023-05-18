@@ -71,12 +71,7 @@ function ResourceDetails() {
             <tr>
               <td>{index + 1}</td>
               <td>{entry.ConsumedQuantity}</td>
-              <td>
-                {entry.Cost.toLocaleString("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                })}
-              </td>
+              <td>$ {Number(entry.Cost).toFixed(2)}</td>
               <td>{entry.Date}</td>
               <td>{entry.MeterCategory}</td>
               <td>{entry.ResourceGroup}</td>
