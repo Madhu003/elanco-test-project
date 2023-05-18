@@ -8,16 +8,16 @@ import { BASE_URL } from "./constants";
 
 let table;
 
-function ApplicationDetails() {
+function ResourceDetails() {
   const [isLoading, setLoading] = useState(false);
   const [rows, setRows] = useState<any>([]);
-  let { appName } = useParams();
+  let { name } = useParams();
 
   useEffect(() => {
     table = new DataTable("#myTable");
     setLoading(true);
     axios
-      .get(`${BASE_URL}/applications/${appName}`)
+      .get(`${BASE_URL}/resources/${name}`)
       .then(function (response) {
         setRows(response.data);
         $(document).ready(function () {
@@ -91,4 +91,4 @@ function ApplicationDetails() {
   );
 }
 
-export default ApplicationDetails;
+export default ResourceDetails;
