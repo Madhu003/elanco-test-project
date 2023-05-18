@@ -4,7 +4,7 @@ import axios from "axios";
 import DataTable from "datatables.net-dt";
 import $ from "jquery";
 import { Backdrop, CircularProgress } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { BASE_URL } from "./constants";
 
 let table;
@@ -82,7 +82,11 @@ function ResourceDetails() {
               <td>{entry.ResourceGroup}</td>
               <td>{entry.Location}</td>
               <td>{entry.ServiceName}</td>
-              <td>{entry.Tags["app-name"]}</td>
+              <td>
+                <Link to={`/application-details/${entry.Tags["app-name"]}`}>
+                  {entry.Tags["app-name"]}
+                </Link>
+              </td>
               <td>{entry.Tags.environment}</td>
               <td>{entry.Tags["business-unit"]}</td>
             </tr>

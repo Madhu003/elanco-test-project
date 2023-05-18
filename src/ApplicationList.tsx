@@ -49,7 +49,6 @@ function ApplicationList() {
         <thead>
           <tr>
             <th>#</th>
-
             <th>Application Name</th>
           </tr>
         </thead>
@@ -57,7 +56,6 @@ function ApplicationList() {
           {rows.map((entry: string, index: number) => (
             <tr>
               <td>{index + 1}</td>
-
               <td>
                 <Link to={`/application-details/${entry}`}>{entry}</Link>
               </td>

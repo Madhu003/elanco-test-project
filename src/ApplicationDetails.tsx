@@ -4,7 +4,7 @@ import axios from "axios";
 import DataTable from "datatables.net-dt";
 import $ from "jquery";
 import { Backdrop, CircularProgress } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { BASE_URL } from "./constants";
 
 let table;
@@ -55,14 +55,13 @@ function ApplicationDetails() {
             <th rowSpan={2}>Consumed Quantity</th>
             <th rowSpan={2}>Cost</th>
             <th rowSpan={2}>Date</th>
-            <th rowSpan={2}>Meter Category</th>
+            {/* <th rowSpan={2}>Meter Category</th> */}
             <th rowSpan={2}>Resource Group</th>
             <th rowSpan={2}>Location</th>
             <th rowSpan={2}>ServiceName</th>
-            <th colSpan={3}>Tags</th>
+            <th colSpan={2}>Tags</th>
           </tr>
           <tr>
-            <th>App Name</th>
             <th>Environment</th>
             <th>Business unit</th>
           </tr>
@@ -73,17 +72,20 @@ function ApplicationDetails() {
               <td>{index + 1}</td>
               <td>{entry.ConsumedQuantity}</td>
               <td>
-                {entry.Cost.toLocaleString("en-US", {
+                $ {entry.Cost.toFixed(2).toLocaleString("en-US", {
                   style: "currency",
                   currency: "USD",
                 })}
               </td>
               <td>{entry.Date}</td>
-              <td>{entry.MeterCategory}</td>
+              {/* <td>{entry.MeterCategory}</td> */}
               <td>{entry.ResourceGroup}</td>
               <td>{entry.Location}</td>
-              <td>{entry.ServiceName}</td>
-              <td>{entry.Tags["app-name"]}</td>
+              <td>
+                <Link to={`/resource-details/${entry.ServiceName}`}>
+                  {entry.ServiceName}
+                </Link>
+              </td>
               <td>{entry.Tags.environment}</td>
               <td>{entry.Tags["business-unit"]}</td>
             </tr>
