@@ -41,9 +41,9 @@ export default function App() {
   ];
 
   const menuList = [
-    { name: "Cloud Applications", path: "/cloud-applications" },
     { name: "Applications", path: "/application-list" },
     { name: "Resourses", path: "/resources-list" },
+    { name: "Cloud Applications", path: "/cloud-applications" },
   ];
 
   React.useEffect(() => {

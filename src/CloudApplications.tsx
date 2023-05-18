@@ -50,13 +50,15 @@ function CloudApplications() {
       >
         <thead>
           <tr>
-            <th rowSpan={2}>#</th>
-            <th rowSpan={2}>Consumed Quantity</th>
-            <th rowSpan={2}>Cost</th>
-            <th rowSpan={2}>Date</th>
-            <th rowSpan={2}>Resource Group</th>
-            <th rowSpan={2}>ServiceName</th>
-            <th rowSpan={2}>Location</th>
+            <th>#</th>
+            <th>Consumed Quantity</th>
+            <th>Cost</th>
+            <th>Date</th>
+            <th>Resource Group</th>
+            <th>ServiceName</th>
+            <th>Location</th>
+            <th>Environment</th>
+            <th>Business unit</th>
           </tr>
         </thead>
         <tbody>
