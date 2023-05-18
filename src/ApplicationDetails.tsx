@@ -72,7 +72,7 @@ function ApplicationDetails() {
               <td>{index + 1}</td>
               <td>{entry.ConsumedQuantity}</td>
               <td>
-                $ {entry.Cost.toFixed(2).toLocaleString("en-US", {
+                $ {entry.Cost.toLocaleString("en-US", {
                   style: "currency",
                   currency: "USD",
                 })}

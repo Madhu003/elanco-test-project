@@ -6,9 +6,6 @@ import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.css";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import { BrowserRouter } from "react-router-dom";
-import { createBrowserHistory } from "history";
-
-const history = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
