@@ -16,11 +16,12 @@ import ApplicationDetails from "./ApplicationDetails";
 import ResourcesList from "./ResourcesList";
 import ResourceDetails from "./ResourceDetails";
 
-import "./App.css"
+import "./App.css";
 const drawerWidth = 240;
 
 export default function App() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [selectedMenu, setSelectedMenu] = React.useState("Applications");
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -38,8 +39,13 @@ export default function App() {
       <List>
         {menuList.map((menu, index) => (
           <ListItem key={menu.name} disablePadding>
-            <ListItemButton>
-              <Link className="menu-item" to={menu.path}>{menu.name}</Link>
+            <ListItemButton
+              selected={selectedMenu === menu.name}
+              onClick={() => setSelectedMenu(menu.name)}
+            >
+              <Link className="menu-item" to={menu.path}>
+                {menu.name}
+              </Link>
             </ListItemButton>
           </ListItem>
         ))}
