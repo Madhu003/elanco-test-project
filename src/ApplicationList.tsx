@@ -14,6 +14,7 @@ function ApplicationList() {
 
   useEffect(() => {
     table = new DataTable("#myTable");
+    console.log(table);
     setLoading(true);
     axios
       .get(`${BASE_URL}/applications`)

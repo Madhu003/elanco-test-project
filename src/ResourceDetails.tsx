@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "datatables.net-dt";
@@ -15,6 +16,7 @@ function ResourceDetails() {
 
   useEffect(() => {
     table = new DataTable("#myTable");
+    console.log(table);
     setLoading(true);
     axios
       .get(`${BASE_URL}/resources/${name}`)
