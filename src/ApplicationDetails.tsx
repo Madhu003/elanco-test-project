@@ -1,13 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import DataTable from "datatables.net-dt";
-import $ from "jquery";
 import { Backdrop, CircularProgress } from "@mui/material";
 import { useParams, Link } from "react-router-dom";
 import { BASE_URL } from "./constants";
-
-let table;
+import { AgGridReact } from "ag-grid-react";
 
 function ApplicationDetails() {
   const [isLoading, setLoading] = useState(false);
@@ -15,16 +12,11 @@ function ApplicationDetails() {
   let { appName } = useParams();
 
   useEffect(() => {
-    table = new DataTable("#myTable");
-    console.log(table);
     setLoading(true);
     axios
       .get(`${BASE_URL}/applications/${appName}`)
       .then(function (response) {
         setRows(response.data);
-        $(document).ready(function () {
-          $("#example").DataTable();
-        });
       })
       .catch(function (error) {
         // handle error
@@ -35,16 +27,33 @@ function ApplicationDetails() {
       });
   }, []);
 
+  let columnDefs = [
+    { headerName: "Make", field: "make" },
+    { headerName: "Model", field: "model" },
+    { headerName: "Price", field: "price" },
+  ];
+
+  let rowData = [
+    { make: "Toyota", model: "Celica", price: 35000 },
+    { make: "Ford", model: "Mondeo", price: 32000 },
+    { make: "Porsche", model: "Boxster", price: 72000 },
+  ];
+
   return (
-    <div>
+    <div className="ag-theme-alpine container">
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isLoading}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
+      <AgGridReact
+        columnDefs={columnDefs}
+        rowData={rowData}
+        className="ag-table"
+      ></AgGridReact>
 
-      <table
+      {/* <table
         id="example"
         className="table table-striped table-bordered"
         style={{ width: "100%" }}
@@ -55,7 +64,7 @@ function ApplicationDetails() {
             <th rowSpan={2}>Consumed Quantity</th>
             <th rowSpan={2}>Cost</th>
             <th rowSpan={2}>Date</th>
-            {/* <th rowSpan={2}>Meter Category</th> */}
+            <th rowSpan={2}>Meter Category</th> 
             <th rowSpan={2}>Resource Group</th>
             <th rowSpan={2}>Location</th>
             <th rowSpan={2}>ServiceName</th>
@@ -71,9 +80,9 @@ function ApplicationDetails() {
             <tr>
               <td>{index + 1}</td>
               <td align="right">{entry.ConsumedQuantity}</td>
-              <td align="right">${" "}{Number(entry.Cost).toFixed(2)}</td>
+              <td align="right">$ {Number(entry.Cost).toFixed(2)}</td>
               <td>{entry.Date}</td>
-              {/* <td>{entry.MeterCategory}</td> */}
+              <td>{entry.MeterCategory}</td>
               <td>{entry.ResourceGroup}</td>
               <td>{entry.Location}</td>
               <td>
@@ -86,7 +95,7 @@ function ApplicationDetails() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
     </div>
   );
 }
