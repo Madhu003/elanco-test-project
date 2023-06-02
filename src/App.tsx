@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -55,7 +54,7 @@ export default function App() {
         (item) => window.location.pathname.indexOf(item.path) > -1
       )?.name || "Application List"
     );
-  }, [location]);
+  }, [location, titleForHeader]);
 
   const drawer = (
     <div>
