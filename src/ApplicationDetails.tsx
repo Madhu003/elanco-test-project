@@ -8,21 +8,29 @@ import { AgGridReact } from "ag-grid-react";
 const columnDefs = [
   {
     headerName: "#",
-    valueFormatter: (params: { node: { rowIndex: number; }; }) => params.node.rowIndex + 1,
+    valueFormatter: (params: { node: { rowIndex: number } }) =>
+      params.node.rowIndex + 1,
     sortable: true,
   },
   {
     headerName: "Consumed Quantity",
     field: "ConsumedQuantity",
     sortable: true,
+    cellStyle: {
+      textAlign: "right",
+    },
   },
   {
     headerName: "Cost",
-    valueFormatter: (params: { data: { Cost: any; }; }) => Number(params.data.Cost).toFixed(2),
+    valueFormatter: (params: { data: { Cost: any } }) =>
+      "$" + Number(params.data.Cost).toFixed(2),
     sortable: true,
+    cellStyle: {
+      textAlign: "right",
+    },
   },
   { headerName: "Date", field: "Date", sortable: true },
-  { headerName: "Meter Category", field: "MeterCategory", sortable: true },
+  // { headerName: "Meter Category", field: "MeterCategory", sortable: true },
   { headerName: "Resource Group", field: "ResourceGroup", sortable: true },
   { headerName: "Location", field: "Location", sortable: true },
   {
@@ -43,7 +51,7 @@ const columnDefs = [
         sortable: true,
       },
       {
-        headerName: "Environment",
+        headerName: "Business Unit",
         valueFormatter: (params: any) => params.data.Tags["business-unit"],
         sortable: true,
       },

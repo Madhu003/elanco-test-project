@@ -9,20 +9,29 @@ import { AgGridReact } from "ag-grid-react";
 const columnDefs = [
   {
     headerName: "#",
-    valueFormatter: (params: { node: { rowIndex: number; }; }) => params.node.rowIndex + 1,
+    valueFormatter: (params: { node: { rowIndex: number } }) =>
+      params.node.rowIndex + 1,
     sortable: true,
   },
   {
     headerName: "Consumed Quantity",
     field: "ConsumedQuantity",
+    cellStyle: {
+      textAlign: "right",
+    },
     sortable: true,
   },
   {
     headerName: "Cost",
-    valueFormatter: (params: { data: { Cost: any; }; }) => Number(params.data.Cost).toFixed(2),
+    valueFormatter: (params: { data: { Cost: any } }) =>
+      "$" + Number(params.data.Cost).toFixed(2),
+      cellStyle: {
+        textAlign: "right",
+      },
     sortable: true,
   },
   { headerName: "Date", field: "Date", sortable: true },
+  { headerName: "Location", field: "Location", sortable: true },
   {
     headerName: "Resource Group",
     cellRenderer: (params: any) => (
@@ -42,8 +51,7 @@ const columnDefs = [
     ),
     sortable: true,
   },
-  { headerName: "Location", field: "Location", sortable: true },
-  { headerName: "Meter Category", field: "MeterCategory", sortable: true },
+  // { headerName: "Meter Category", field: "MeterCategory", sortable: true },
   {
     headerName: "Environment",
     field: "Tags.environment",
@@ -54,7 +62,7 @@ const columnDefs = [
     valueFormatter: (params: any) => params.data.Tags["business-unit"],
     sortable: true,
   },
-]
+];
 
 function CloudApplications() {
   const [isLoading, setLoading] = useState(false);
@@ -91,7 +99,6 @@ function CloudApplications() {
         <CircularProgress color="inherit" />
       </Backdrop>
       <AgGridReact {...agGridOps}></AgGridReact>
-
     </div>
   );
 }
