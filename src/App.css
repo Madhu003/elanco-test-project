@@ -52,5 +52,13 @@
 }
 
 .container {
-  height: 80vh;
+  height: 85vh;
+}
+
+.ag-header-cell-text, .ag-header-group-cell-label {
+  font-size: 16px;
+}
+
+.ag-cell, .ag-header-cell {
+  border-right: 1px solid #dde2eb !important;
 }

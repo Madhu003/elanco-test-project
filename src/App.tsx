@@ -18,9 +18,9 @@ import ResourcesList from "./ResourcesList";
 import ResourceDetails from "./ResourceDetails";
 import CloudApplications from "./CloudApplications";
 
-import "./App.css";
 import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
+import "./App.css";
 
 const drawerWidth = 240;
 
