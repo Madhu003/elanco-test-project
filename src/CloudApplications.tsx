@@ -51,7 +51,7 @@ const columnDefs = [
   },
   {
     headerName: "Business Unit",
-    valueFormatter: (params) => params.data.Tags["business-unit"],
+    valueFormatter: (params: any) => params.data.Tags["business-unit"],
     sortable: true,
   },
 ]
