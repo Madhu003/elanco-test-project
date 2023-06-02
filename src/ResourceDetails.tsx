@@ -84,7 +84,7 @@ function ResourceDetails() {
       .finally(function () {
         setLoading(false);
       });
-  }, []);
+  }, [name]);
 
   return (
     <div className="ag-theme-alpine container">

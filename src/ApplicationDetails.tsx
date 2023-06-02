@@ -77,7 +77,7 @@ function ApplicationDetails() {
       .finally(function () {
         setLoading(false);
       });
-  }, []);
+  }, [appName]);
 
   return (
     <div className="ag-theme-alpine container">
