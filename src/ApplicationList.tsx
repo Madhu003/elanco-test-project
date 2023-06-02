@@ -8,25 +8,16 @@ import { AgGridReact } from "ag-grid-react";
 const columnDefs = [
   {
     headerName: "#",
-    valueFormatter: (params: { node: { rowIndex: number } }) =>
-      params.node.rowIndex + 1,
-    getQuickFilterText: (params: any) => {
-      debugger;
-      return true;
-    },
+    field: "id",
     sortable: true,
     width: "200",
   },
   {
     headerName: "Application Name",
+    field: "appName",
     cellRenderer: (params: any) => (
-      <Link to={`/application-details/${params.data}`}>{params.data}</Link>
+      <Link to={`/application-details/${params.data.appName}`}>{params.data.appName}</Link>
     ),
-    // getQuickFilterText: (params: any) => {
-    //   debugger;
-    //   params.data.indexOf(se)
-    //   return true;
-    // },
     sortable: true,
     width: "",
   },
@@ -35,22 +26,28 @@ const columnDefs = [
 function ApplicationList() {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [gridApi, setGridApi] = useState<any>(null);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
 
   const [agGridOps, setAgGridOps] = useState<any>({
     columnDefs,
     rowData: [],
     paginationPageSize: 15,
     pagination: true,
-    cacheQuickFilter: true
+    cacheQuickFilter: true,
   });
 
   useEffect(() => {
     setLoading(true);
     axios
       .get(`${BASE_URL}/applications`)
-      .then(function (response) {
-        setAgGridOps({ ...setAgGridOps, rowData: response.data });
+      .then((response) => {
+        setAgGridOps({
+          ...setAgGridOps,
+          rowData: response.data.map((item: string, index: number) => ({
+            id: index + 1,
+            appName: item,
+          })),
+        });
       })
       .catch(function (error) {
         // handle error
@@ -67,7 +64,7 @@ function ApplicationList() {
 
   const onSearchInputChange = (event: any) => {
     const { value } = event.target;
-    setSearchText(value)
+    setSearchText(value);
     gridApi?.setQuickFilter(value); // Apply filter on the grid
   };
 

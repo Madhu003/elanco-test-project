@@ -8,8 +8,7 @@ import { AgGridReact } from "ag-grid-react";
 const columnDefs = [
   {
     headerName: "#",
-    valueFormatter: (params: { node: { rowIndex: number } }) =>
-      params.node.rowIndex + 1,
+    field: "id",
     sortable: true,
   },
   {
@@ -22,6 +21,7 @@ const columnDefs = [
   },
   {
     headerName: "Cost",
+    field: "Cost",
     valueFormatter: (params: { data: { Cost: any } }) =>
       "$" + Number(params.data.Cost).toFixed(2),
     sortable: true,
@@ -35,6 +35,7 @@ const columnDefs = [
   { headerName: "Location", field: "Location", sortable: true },
   {
     headerName: "Service Name",
+    field: "ServiceName",
     cellRenderer: (params: any) => (
       <Link to={`/resource-details/${params.data.ServiceName}`}>
         {params.data.ServiceName}
@@ -52,6 +53,7 @@ const columnDefs = [
       },
       {
         headerName: "Business Unit",
+        field: "Tags.business-unit",
         valueFormatter: (params: any) => params.data.Tags["business-unit"],
         sortable: true,
       },
@@ -68,7 +70,7 @@ function ApplicationDetails() {
     rowData: [],
     paginationPageSize: 15,
     pagination: true,
-    cacheQuickFilter: true
+    cacheQuickFilter: true,
   });
 
   let { appName } = useParams();
@@ -78,7 +80,13 @@ function ApplicationDetails() {
     axios
       .get(`${BASE_URL}/applications/${appName}`)
       .then(function (response) {
-        setAgGridOps({ ...setAgGridOps, rowData: response.data });
+        setAgGridOps({
+          ...setAgGridOps,
+          rowData: response.data.map((item: any, index: number) => ({
+            ...item,
+            id: index + 1,
+          })),
+        });
       })
       .catch(function (error) {
         // handle error
@@ -115,7 +123,6 @@ function ApplicationDetails() {
         />
       </div>
       <AgGridReact {...agGridOps} onGridReady={onGridReady}></AgGridReact>
-
     </div>
   );
 }

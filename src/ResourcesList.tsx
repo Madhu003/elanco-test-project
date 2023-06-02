@@ -9,15 +9,16 @@ import { BASE_URL } from "./constants";
 const columnDefs = [
   {
     headerName: "#",
-    valueFormatter: (params: { node: { rowIndex: number } }) =>
-      params.node.rowIndex + 1,
+    field: "id",
     sortable: true,
     width: "200",
   },
   {
     headerName: "Application Name",
+    field: "resourceName",
+
     cellRenderer: (params: any) => (
-      <Link to={`/resource-details/${params.data}`}>{params.data}</Link>
+      <Link to={`/resource-details/${params.data.resourceName}`}>{params.data.resourceName}</Link>
     ),
     sortable: true,
     width: "",
@@ -32,7 +33,7 @@ function ResourcesList() {
     rowData: [],
     paginationPageSize: 15,
     pagination: true,
-    cacheQuickFilter: true
+    cacheQuickFilter: true,
   });
 
   useEffect(() => {
@@ -40,7 +41,14 @@ function ResourcesList() {
     axios
       .get(`${BASE_URL}/resources`)
       .then(function (response) {
-        setAgGridOps({ ...setAgGridOps, rowData: response.data });
+        debugger;
+        setAgGridOps({
+          ...setAgGridOps,
+          rowData: response.data.map((item: string, index: number) => ({
+            id: index + 1,
+            resourceName: item,
+          })),
+        });
       })
       .catch(function (error) {
         // handle error
@@ -77,7 +85,6 @@ function ResourcesList() {
         />
       </div>
       <AgGridReact {...agGridOps} onGridReady={onGridReady}></AgGridReact>
-
     </div>
   );
 }

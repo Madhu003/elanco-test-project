@@ -22,6 +22,7 @@ const columnDefs = [
   },
   {
     headerName: "Cost",
+    field: "Cost",
     valueFormatter: (params: { data: { Cost: any } }) =>
       "$" + Number(params.data.Cost).toFixed(2),
     cellStyle: {
@@ -60,6 +61,7 @@ const columnDefs = [
       },
       {
         headerName: "Business Unit",
+        field: "Tags.business-unit",
         valueFormatter: (params: any) => params.data.Tags["business-unit"],
         sortable: true,
       },

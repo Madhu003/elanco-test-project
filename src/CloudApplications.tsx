@@ -23,27 +23,29 @@ const columnDefs = [
   },
   {
     headerName: "Cost",
+    field: "Cost",
     valueFormatter: (params: { data: { Cost: any } }) =>
       "$" + Number(params.data.Cost).toFixed(2),
-      cellStyle: {
-        textAlign: "right",
-      },
+    cellStyle: {
+      textAlign: "right",
+    },
     sortable: true,
   },
   { headerName: "Date", field: "Date", sortable: true },
   { headerName: "Location", field: "Location", sortable: true },
   {
     headerName: "Resource Group",
+    field: "ResourceGroup",
     cellRenderer: (params: any) => (
       <Link to={`/application-details/${params.data.ResourceGroup}`}>
         {params.data.ResourceGroup}
       </Link>
     ),
-    field: "ResourceGroup",
     sortable: true,
   },
   {
     headerName: "Service Name",
+    field: "ServiceName",
     cellRenderer: (params: any) => (
       <Link to={`/resource-details/${params.data.ServiceName}`}>
         {params.data.ServiceName}
@@ -59,6 +61,7 @@ const columnDefs = [
   },
   {
     headerName: "Business Unit",
+    field: "Tags.business-unit",
     valueFormatter: (params: any) => params.data.Tags["business-unit"],
     sortable: true,
   },
@@ -73,7 +76,7 @@ function CloudApplications() {
     rowData: [],
     paginationPageSize: 15,
     pagination: true,
-    cacheQuickFilter: true
+    cacheQuickFilter: true,
   });
 
   useEffect(() => {
@@ -118,7 +121,6 @@ function CloudApplications() {
         />
       </div>
       <AgGridReact {...agGridOps} onGridReady={onGridReady}></AgGridReact>
-
     </div>
   );
 }
