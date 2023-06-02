@@ -69,11 +69,14 @@ const columnDefs = [
 
 function ResourceDetails() {
   const [isLoading, setLoading] = useState(false);
+  const [gridApi, setGridApi] = useState<any>(null);
+
   const [agGridOps, setAgGridOps] = useState<any>({
     columnDefs,
     rowData: [],
     paginationPageSize: 15,
     pagination: true,
+    cacheQuickFilter: true
   });
 
   let { name } = useParams();
@@ -94,6 +97,15 @@ function ResourceDetails() {
       });
   }, [name]);
 
+  const onGridReady = (params: { api: React.SetStateAction<null> }) => {
+    setGridApi(params.api);
+  };
+
+  const onSearchInputChange = (event: any) => {
+    const { value } = event.target;
+    gridApi?.setQuickFilter(value); // Apply filter on the grid
+  };
+
   return (
     <div className="ag-theme-alpine container">
       <Backdrop
@@ -102,7 +114,16 @@ function ResourceDetails() {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      <AgGridReact {...agGridOps}></AgGridReact>
+      <div className="search-bar">
+        <input
+          className="form-control"
+          type="text"
+          placeholder="Search..."
+          onChange={onSearchInputChange}
+        />
+      </div>
+      <AgGridReact {...agGridOps} onGridReady={onGridReady}></AgGridReact>
+
     </div>
   );
 }
