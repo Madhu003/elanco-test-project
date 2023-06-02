@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import DataTable from "datatables.net-dt";
-import $ from "jquery";
 import { Backdrop, CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
 import { AgGridReact } from "ag-grid-react";
 
 import { BASE_URL } from "./constants";
-
-let table;
 
 function ResourcesList() {
   const [rows, setRows] = useState<any>([]);
@@ -45,6 +41,8 @@ function ResourcesList() {
         setLoading(false);
       });
   }, []);
+
+  
   return (
     <div className="ag-theme-alpine container">
       <Backdrop
