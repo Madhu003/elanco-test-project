@@ -6,32 +6,38 @@ import { AgGridReact } from "ag-grid-react";
 
 import { BASE_URL } from "./constants";
 
+const columnDefs = [
+  {
+    headerName: "#",
+    valueFormatter: (params: { node: { rowIndex: number; }; }) => params.node.rowIndex + 1,
+    sortable: true,
+    width: "200",
+  },
+  {
+    headerName: "Application Name",
+    cellRenderer: (params: any) => (
+      <Link to={`/resource-details/${params.data}`}>{params.data}</Link>
+    ),
+    sortable: true,
+    width: "",
+  },
+];
 function ResourcesList() {
-  const [rows, setRows] = useState<any>([]);
   const [isLoading, setLoading] = useState(false);
-  const [columnDefs, setColumnDefs] = useState([
-    {
-      headerName: "#",
-      valueFormatter: (params: any) => params.node.rowIndex + 1,
-      sortable: true,
-      width: "200",
-    },
-    {
-      headerName: "Application Name",
-      cellRenderer: (params: any) => (
-        <Link to={`/resource-details/${params.data}`}>{params.data}</Link>
-      ),
-      sortable: true,
-      width: "",
-    },
-  ]);
+
+  const [agGridOps, setAgGridOps] = useState<any>({
+    columnDefs,
+    rowData: [],
+    paginationPageSize: 15,
+    pagination: true,
+  });
 
   useEffect(() => {
     setLoading(true);
     axios
       .get(`${BASE_URL}/resources`)
       .then(function (response) {
-        setRows(response.data);
+        setAgGridOps({ ...setAgGridOps, rowData: response.data });
       })
       .catch(function (error) {
         // handle error
@@ -42,7 +48,6 @@ function ResourcesList() {
       });
   }, []);
 
-  
   return (
     <div className="ag-theme-alpine container">
       <Backdrop
@@ -51,12 +56,7 @@ function ResourcesList() {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      <AgGridReact
-        columnDefs={columnDefs}
-        rowData={rows}
-        paginationPageSize={15}
-        pagination={true}
-      ></AgGridReact>
+      <AgGridReact {...agGridOps}></AgGridReact>
     </div>
   );
 }
