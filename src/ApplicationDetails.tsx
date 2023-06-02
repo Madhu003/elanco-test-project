@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Backdrop, CircularProgress } from "@mui/material";
@@ -9,6 +8,51 @@ import { AgGridReact } from "ag-grid-react";
 function ApplicationDetails() {
   const [isLoading, setLoading] = useState(false);
   const [rows, setRows] = useState<any>([]);
+  const [columnDefs, setColumnDef] = useState([
+    {
+      headerName: "#",
+      valueFormatter: (params: any) => params.node.rowIndex + 1,
+      sortable: true,
+    },
+    {
+      headerName: "Consumed Quantity",
+      field: "ConsumedQuantity",
+      sortable: true,
+    },
+    {
+      headerName: "Cost",
+      valueFormatter: (params: any) => Number(params.data.Cost).toFixed(2),
+      sortable: true,
+    },
+    { headerName: "Date", field: "Date", sortable: true },
+    { headerName: "Meter Category", field: "MeterCategory", sortable: true },
+    { headerName: "Resource Group", field: "ResourceGroup", sortable: true },
+    { headerName: "Location", field: "Location", sortable: true },
+    {
+      headerName: "Service Name",
+      cellRenderer: (params: any) => (
+        <Link to={`/resource-details/${params.data.ServiceName}`}>
+          {params.data.ServiceName}
+        </Link>
+      ),
+      sortable: true,
+    },
+    {
+      headerName: "Tags",
+      children: [
+        {
+          headerName: "Environment",
+          field: "Tags.environment",
+          sortable: true,
+        },
+        {
+          headerName: "Environment",
+          valueFormatter: (params: any) => params.data.Tags["business-unit"],
+          sortable: true,
+        },
+      ],
+    },
+  ]);
   let { appName } = useParams();
 
   useEffect(() => {
@@ -27,18 +71,6 @@ function ApplicationDetails() {
       });
   }, []);
 
-  let columnDefs = [
-    { headerName: "Make", field: "make" },
-    { headerName: "Model", field: "model" },
-    { headerName: "Price", field: "price" },
-  ];
-
-  let rowData = [
-    { make: "Toyota", model: "Celica", price: 35000 },
-    { make: "Ford", model: "Mondeo", price: 32000 },
-    { make: "Porsche", model: "Boxster", price: 72000 },
-  ];
-
   return (
     <div className="ag-theme-alpine container">
       <Backdrop
@@ -48,54 +80,11 @@ function ApplicationDetails() {
         <CircularProgress color="inherit" />
       </Backdrop>
       <AgGridReact
-        columnDefs={columnDefs}
-        rowData={rowData}
-        className="ag-table"
+        columnDefs={columnDefs.map((item) => ({ ...item, filter: true }))}
+        rowData={rows}
+        paginationPageSize={15}
+        pagination={true}
       ></AgGridReact>
-
-      {/* <table
-        id="example"
-        className="table table-striped table-bordered"
-        style={{ width: "100%" }}
-      >
-        <thead>
-          <tr>
-            <th rowSpan={2}>#</th>
-            <th rowSpan={2}>Consumed Quantity</th>
-            <th rowSpan={2}>Cost</th>
-            <th rowSpan={2}>Date</th>
-            <th rowSpan={2}>Meter Category</th> 
-            <th rowSpan={2}>Resource Group</th>
-            <th rowSpan={2}>Location</th>
-            <th rowSpan={2}>ServiceName</th>
-            <th colSpan={2}>Tags</th>
-          </tr>
-          <tr>
-            <th>Environment</th>
-            <th>Business unit</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((entry: any, index: number) => (
-            <tr>
-              <td>{index + 1}</td>
-              <td align="right">{entry.ConsumedQuantity}</td>
-              <td align="right">$ {Number(entry.Cost).toFixed(2)}</td>
-              <td>{entry.Date}</td>
-              <td>{entry.MeterCategory}</td>
-              <td>{entry.ResourceGroup}</td>
-              <td>{entry.Location}</td>
-              <td>
-                <Link to={`/resource-details/${entry.ServiceName}`}>
-                  {entry.ServiceName}
-                </Link>
-              </td>
-              <td>{entry.Tags.environment}</td>
-              <td>{entry.Tags["business-unit"]}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
     </div>
   );
 }
